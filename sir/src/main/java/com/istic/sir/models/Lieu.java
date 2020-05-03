@@ -23,6 +23,7 @@ public class Lieu {
 	@Id
 	@GeneratedValue
 	public long getId_lieu() {
+		
 		return id_lieu;
 	}
 
