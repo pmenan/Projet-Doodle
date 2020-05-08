@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import com.istic.sir.models.Dates;
 import com.istic.sir.models.Lieu;
+import com.istic.sir.models.Pad;
 import com.istic.sir.models.Participant;
 import com.istic.sir.models.Preference;
 import com.istic.sir.models.Sondage;
@@ -20,9 +21,11 @@ public interface ParticipantService {
 	
 	Sondage getSondageById(Long id_sondage);
 	
-	Lieu addLieuSondage(Long id_user, Long idSondage, Lieu lieu);
+	Lieu addLieuSondage(Long id_user, Long id_sondage, Lieu lieu);
 	
-	Dates addDateSondage(Long id_user, Long idSondage, Dates date);
+	Dates addDateSondage(Long id_user, Long id_sondage, Dates date);
+	
+	void valider_sondage(Long id_user, Long id_sondage);
 	
 	Dates choseDateSodage(Long id_user, Long id_sondage, Long id_date, boolean chose);
 	
@@ -30,9 +33,9 @@ public interface ParticipantService {
 	
 	void deleteSondage(Long id_user, Long id_sondage);
 	
-	void deleteDate(Long id_user, Long id_sondage, Dates id_date);
+	void deleteDate(Long id_user, Long id_sondage, Long id_date);
 	
-	void deleteLieu(Long id_user, Long id_sondage, Lieu id_lieu);
+	void deleteLieu(Long id_user, Long id_sondage, Long id_lieu);
 	
 	Preference addPreSondage(Long id_user, Long id_sondage, Preference preference);
 	
