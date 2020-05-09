@@ -9,3 +9,4 @@ public interface ParticipantRepo extends JpaRepository <Participant, Long>{
 	Participant findByEmail(String email);
 
 }
+

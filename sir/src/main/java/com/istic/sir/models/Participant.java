@@ -19,7 +19,7 @@ public class Participant {
 	private long id_participant;
 	private String nom_participant;
 	private String prenom_participant;
-	private String email_participant;
+	private String email; 
 	private List<Preference> listPreference = new ArrayList<Preference>();
 	
 	//liste de sondage cr��e par le participant
@@ -35,7 +35,7 @@ public class Participant {
 	public Participant(String nom, String prenom, String email) {
 		this.nom_participant = nom;
 		this.prenom_participant = prenom;
-		this.email_participant = email;
+		this.email = email;
 	}
 
 	@Id
@@ -65,12 +65,12 @@ public class Participant {
 	}
 	
 	@Column(nullable = false, unique=true)
-	public String getEmail_participant() {
-		return email_participant;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setEmail_participant(String email_participant) {
-		this.email_participant = email_participant;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	@OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})

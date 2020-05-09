@@ -24,10 +24,10 @@ import com.istic.sir.repository.ParticipantRepo;
 import com.istic.sir.repository.PreferenceRepo;
 import com.istic.sir.repository.SondageRepo;
 
-@Service(value = "utilisateurService")
+@Service(value = "user_service")
 @Transactional(readOnly = true)
 @CrossOrigin
-public class ParticipantServiceImpl<JavaMailSender> implements ParticipantService {
+public class ParticipantServiceImpl implements ParticipantService {
 
 	
 	
@@ -50,7 +50,7 @@ public class ParticipantServiceImpl<JavaMailSender> implements ParticipantServic
 	@Override
 	public Participant login(Participant participant) {
 		
-		return participantRepo.findByEmail(participant.getEmail_participant());
+		return participantRepo.findByEmail(participant.getEmail());
 	}
 
 	@Override
