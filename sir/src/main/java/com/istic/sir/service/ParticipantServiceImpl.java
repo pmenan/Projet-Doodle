@@ -95,6 +95,7 @@ public class ParticipantServiceImpl<JavaMailSender> implements ParticipantServic
 		SondageLieu sondage = (SondageLieu) getSondageById(id_sondage);
 		lieu = lieuRepo.save(lieu);
 		sondage.getListeLieu().add(lieu);
+		
 		return lieu;
 	}
 	
@@ -125,6 +126,7 @@ public class ParticipantServiceImpl<JavaMailSender> implements ParticipantServic
 				
 			}
 		}
+		
 		return date_sondage;
 	}
 	
@@ -148,6 +150,7 @@ public class ParticipantServiceImpl<JavaMailSender> implements ParticipantServic
 				
 			}
 		}
+		
 		return lieu_sondage;
 	}
 
@@ -187,9 +190,11 @@ public class ParticipantServiceImpl<JavaMailSender> implements ParticipantServic
 
 	@Transactional
 	@Override
-	public void valider_sondage(Long id_user, Long id_sondage) {
+	public Sondage valider_sondage(Long id_user, Long id_sondage) {
 		Sondage sondage = getSondageById(id_sondage);
 		sondage.setValide(true);
+		
+		return sondage;
 		
 		}
 		

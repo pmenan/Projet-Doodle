@@ -4,14 +4,20 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.istic.sir.models.Dates;
+import com.istic.sir.models.Lieu;
 import com.istic.sir.models.Participant;
+import com.istic.sir.models.Preference;
 import com.istic.sir.models.Sondage;
 import com.istic.sir.service.ParticipantService;
 
@@ -42,7 +48,7 @@ public class ParticipantRest {
 	}
 	
 	
-	//les Sondages
+	//Sondages
 	
 	@PostMapping(value = "{id_user}/sondages")
 	public Sondage createSondage(@PathVariable(value = "id_user") Long id_user, @RequestBody Sondage sondage) {
@@ -54,10 +60,49 @@ public class ParticipantRest {
 		return user_service.getSondageById(id_sondage);
 	}
 	
-	 
-	 @PostMapping(value = "/{id_user}/sondages/{id_sondage/validate")
+	 //urls
+	
+	@PostMapping(value = "/{id_user}/sondages/{id_sondage/validate")
 	 public Sondage validataion_sondage(@PathVariable(value = "id_user") Long id_user, @PathVariable(value = "id_sondage") Long id_sondage) {
 		 return user_service.valider_sondage(id_user, id_sondage);
 	 }
+	 
+	@PostMapping(value = "/{id_user}/sondages/{id_sondage}/dates")
+	    public Dates addDateSondage(@PathVariable(value = "id_ser") Long id_user, @PathVariable(value = "id_sondage") Long id_sondage, @RequestBody Dates date) {
+	        return user_service.addDateSondage(id_user, id_sondage, date);
+	    }
+
+	@PutMapping(value = "/{id_user}/sondages/{id_sondage}/dates/{id_date}")
+	    public Dates selectOrDeselectDateSondage(@PathVariable(value = "id_user") Long id_user, @PathVariable(value = "id_sondage") Long id_sondage, @PathVariable(value = "id_date") Long id_date, @RequestParam("chose") boolean chose) {
+	        return user_service.choseDateSodage(id_user, id_sondage, id_date, chose);
+	    }
+
+	@DeleteMapping(value = "/{id_user}/sondages/{id_sondage}/dates/{id_date}")
+	    public void deleteDateSondage(@PathVariable(value = "id_user") Long id_user, @PathVariable(value = "id_sondage") Long id_sondage, @PathVariable(value = "id_date") Long id_date) {
+	         user_service.deleteDate(id_user, id_sondage, id_date);
+	    }
+	
+	@PostMapping(value = "/{id_user}/sondages/{id_sondage}/lieux")
+    public Lieu addLieuSondages(@PathVariable(value = "id_user") Long id_user, @PathVariable(value = "id_sondage") Long id_sondage, @RequestBody Lieu lieu) {
+        return user_service.addLieuSondage(id_user, id_sondage, lieu);
+    }
+
+
+    @PutMapping(value = "/{id_user}/sondages/{id_sondage}/lieux/{id_lieu}")
+    public Lieu selectOrdelesectLieuSondage(@PathVariable(value = "id_user") Long id_user, @PathVariable(value = "id_sondage") Long id_sondage, @PathVariable(value = "id_lieu") Long id_lieu, @RequestParam("chose") boolean chose ) {
+        return user_service.choseLieuSondage(id_user, id_sondage, id_lieu, chose);
+    }
+
+    @DeleteMapping(value = "/{id_user}/sondages/{id_sondage}/lieux/{id_lieu}")
+    public void deleteLieu(@PathVariable(value = "id_user") Long id_user, @PathVariable(value = "id_sondage") Long id_sondage, @PathVariable(value = "id_lieu") Long id_lieu){
+        user_service.deleteLieu(id_user, id_sondage, id_lieu);
+    }
+    
+    
+    @PostMapping(value = "/{id_user}/sondages/{id_sondage}/preferences")
+    public Preference addPreferenceSondage(@PathVariable(value = "id_user") Long id_user, @PathVariable(value = "id_sondage") Long id_sondage, @RequestBody Preference preference) {
+        return user_service.addPreSondage(id_user, id_sondage, preference);
+    }
+	 
 
 }

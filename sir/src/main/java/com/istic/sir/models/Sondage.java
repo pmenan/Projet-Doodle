@@ -1,6 +1,7 @@
 package com.istic.sir.models;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -27,6 +28,7 @@ public class Sondage {
 	private boolean pause;
 	private boolean valide;
 	private Pad pad;
+	private Collection<Preference> preferences;
 	private List<Participant> participant = new ArrayList<Participant>();
 	private Participant createurSondage;
 	
@@ -113,6 +115,15 @@ public class Sondage {
 
 	public void setCreateurSondage(Participant createurSondage) {
 		this.createurSondage = createurSondage;
+	}
+
+	@OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+	public Collection<Preference> getPreferences() {
+		return preferences;
+	}
+
+	public void setPreferences(Collection<Preference> preferences) {
+		this.preferences = preferences;
 	}
 	
 	

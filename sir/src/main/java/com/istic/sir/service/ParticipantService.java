@@ -25,7 +25,7 @@ public interface ParticipantService {
 	
 	Dates addDateSondage(Long id_user, Long id_sondage, Dates date);
 	
-	void valider_sondage(Long id_user, Long id_sondage);
+	Sondage valider_sondage(Long id_user, Long id_sondage);
 	
 	Dates choseDateSodage(Long id_user, Long id_sondage, Long id_date, boolean chose);
 	
