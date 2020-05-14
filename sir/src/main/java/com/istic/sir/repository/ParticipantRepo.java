@@ -6,7 +6,9 @@ import com.istic.sir.models.Participant;
 
 public interface ParticipantRepo extends JpaRepository <Participant, Long>{
 	
-	Participant findByEmail(String email);
+	Participant findByEmailAndPassword(String email, String password);
 
 }
+
+
 

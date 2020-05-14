@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.istic.sir.models.Dates;
 import com.istic.sir.models.Lieu;
 import com.istic.sir.models.Participant;
@@ -33,11 +32,11 @@ public class ParticipantRest {
 	/**Action Users**/
 	
 	@GetMapping(value = "")
-	public Participant connect(@RequestBody Participant user) {
+	public Participant Connect(@RequestBody Participant user) {
 		return user_service.login(user);
 	}
 	
-	@PostMapping(value = "")
+	@PostMapping(value = "/")
 	public Participant createUser(@RequestBody Participant user) {
 		return user_service.createUser(user);
 	}
@@ -63,7 +62,7 @@ public class ParticipantRest {
 	 //urls
 	
 	@PostMapping(value = "/{id_user}/sondages/{id_sondage/validate")
-	 public Sondage validataion_sondage(@PathVariable(value = "id_user") Long id_user, @PathVariable(value = "id_sondage") Long id_sondage) {
+	 public Sondage valider_sondage(@PathVariable(value = "id_user") Long id_user, @PathVariable(value = "id_sondage") Long id_sondage) {
 		 return user_service.valider_sondage(id_user, id_sondage);
 	 }
 	 

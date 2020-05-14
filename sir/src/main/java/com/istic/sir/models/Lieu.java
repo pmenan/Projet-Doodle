@@ -18,7 +18,8 @@ public class Lieu {
 	private Long id_lieu;
 	private String lieu;
     private Collection<Participant> participant = new ArrayList<>();
-	
+	private boolean valider;
+	private boolean pause;
 	public Lieu() {
 		// TODO Auto-generated constructor stub
 	}
@@ -54,6 +55,24 @@ public class Lieu {
 	public void setParticipant(Collection<Participant> participant) {
 		this.participant = participant;
 	}
+
+	public boolean isValider() {
+		return valider;
+	}
+
+	public void setValider(boolean valider) {
+		this.valider = valider;
+	}
+
+	public boolean isPause() {
+		return pause;
+	}
+
+	public void setPause(boolean pause) {
+		this.pause = pause;
+	}
+	
+	
 	
 	
 

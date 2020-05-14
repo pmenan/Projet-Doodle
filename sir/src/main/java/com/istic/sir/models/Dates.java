@@ -25,6 +25,10 @@ public class Dates{
 	
 	@Temporal(TemporalType.DATE)
 	private Date date;
+	
+	boolean pause;
+	
+	boolean valider;
 
 	public Dates() {
 		// TODO Auto-generated constructor stub
@@ -61,6 +65,24 @@ public class Dates{
 	public void setParticipant(Collection<Participant> participant) {
 		this.participant = participant;
 	}
+
+	public boolean isPause() {
+		return pause;
+	}
+
+	public void setPause(boolean pause) {
+		this.pause = pause;
+	}
+
+	public boolean isValider() {
+		return valider;
+	}
+
+	public void setValider(boolean valider) {
+		this.valider = valider;
+	}
+	
+	
 	
 	
 

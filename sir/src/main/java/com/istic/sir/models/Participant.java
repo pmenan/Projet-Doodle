@@ -6,12 +6,15 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Participant {
@@ -20,12 +23,14 @@ public class Participant {
 	private String nom_participant;
 	private String prenom_participant;
 	private String email; 
-	private List<Preference> listPreference = new ArrayList<Preference>();
+	private String password;
 	
-	//liste de sondage cr��e par le participant
+	//liste de sondages cr��e par le participant
+	@JsonIgnore
 	private List<Sondage> listSondageCrees = new ArrayList<Sondage>();
 	
-	//liste de sondage auxqueles il participe
+	//liste de sondages auxqueles il participe
+	@JsonIgnore
 	private List<Sondage> listSondageParticipe = new ArrayList<Sondage>();
 	
 	public Participant() {
@@ -73,16 +78,7 @@ public class Participant {
 		this.email = email;
 	}
 	
-	@OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
-	public List<Preference> getListPreference() {
-		return listPreference;
-	}
-
-	public void setListPreference(List<Preference> listPreference) {
-		this.listPreference = listPreference;
-	}
-	
-	@OneToMany(mappedBy ="createurSondage", cascade = {CascadeType.PERSIST})
+	@OneToMany(mappedBy ="createurSondage", cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
 	public List<Sondage> getListSondageCrees() {
 		return listSondageCrees;
 	}
@@ -98,6 +94,14 @@ public class Participant {
 
 	public void setListSondageParticipe(List<Sondage> listSondageParticipe) {
 		this.listSondageParticipe = listSondageParticipe;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	

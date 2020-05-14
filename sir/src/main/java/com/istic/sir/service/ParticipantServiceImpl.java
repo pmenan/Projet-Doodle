@@ -1,17 +1,18 @@
 package com.istic.sir.service;
 
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.istic.sir.models.Dates;
 import com.istic.sir.models.Lieu;
-import com.istic.sir.models.Pad;
 import com.istic.sir.models.Participant;
 import com.istic.sir.models.Preference;
 import com.istic.sir.models.Sondage;
@@ -19,12 +20,11 @@ import com.istic.sir.models.SondageDate;
 import com.istic.sir.models.SondageLieu;
 import com.istic.sir.repository.DatesRepo;
 import com.istic.sir.repository.LieuRepo;
-import com.istic.sir.repository.PadRepo;
 import com.istic.sir.repository.ParticipantRepo;
 import com.istic.sir.repository.PreferenceRepo;
 import com.istic.sir.repository.SondageRepo;
 
-@Service(value = "user_service")
+@Service(value = "ParticipantService")
 @Transactional(readOnly = true)
 @CrossOrigin
 public class ParticipantServiceImpl implements ParticipantService {
@@ -33,6 +33,9 @@ public class ParticipantServiceImpl implements ParticipantService {
 	
 	@Autowired
 	SondageRepo sondageRepo;
+	
+	@Autowired
+	JavaMailSender javaMailSender;
 	
 	@Autowired
 	DatesRepo datesRepo;
@@ -50,16 +53,18 @@ public class ParticipantServiceImpl implements ParticipantService {
 	@Override
 	public Participant login(Participant participant) {
 		
-		return participantRepo.findByEmail(participant.getEmail());
+		return participantRepo.findByEmailAndPassword(participant.getEmail(), participant.getPassword());
 	}
 
 	@Override
 	@Transactional
 	public Sondage createSondage(Long id_user, Sondage sondage) {
+		
 		Participant user = participantRepo.findById(id_user).get();
 		sondage.setCreateurSondage(user);
 		sondage.getParticipant().add(user);
-		
+		String code = String.valueOf(ThreadLocalRandom.current().nextInt());
+		sondage.setCode(code);
 		participantRepo.save(user);
 		
 		return sondageRepo.save(sondage); 
@@ -76,7 +81,7 @@ public class ParticipantServiceImpl implements ParticipantService {
 	public Collection<Sondage> getUserSondages(Long id_user) {
 		
 		Participant user =  participantRepo.findById(id_user).get();
-		Collection<Sondage> sondage = new ArrayList<Sondage>();
+		Collection<Sondage> sondage = new ArrayList<>();
 		sondage.addAll(user.getListSondageParticipe());
 		sondage.addAll(user.getListSondageCrees());
 		
@@ -109,6 +114,7 @@ public class ParticipantServiceImpl implements ParticipantService {
 		return date;
 	}
 	
+	@Transactional
 	@Override
 	public Dates choseDateSodage(Long id_user, Long id_sondage, Long id_date, boolean chose) {
 		Dates date_sondage = new Dates();
@@ -193,6 +199,14 @@ public class ParticipantServiceImpl implements ParticipantService {
 	public Sondage valider_sondage(Long id_user, Long id_sondage) {
 		Sondage sondage = getSondageById(id_sondage);
 		sondage.setValide(true);
+		
+		SimpleMailMessage msg = new SimpleMailMessage();
+		for(Participant user : sondage.getParticipant()) {
+			
+			msg.setTo(user.getEmail());
+			msg.setSubject(sondage.getLibelle_sondage());
+			msg.setText("votre code d'accès à la reunion : " +sondage.getCode());
+		}
 		
 		return sondage;
 		

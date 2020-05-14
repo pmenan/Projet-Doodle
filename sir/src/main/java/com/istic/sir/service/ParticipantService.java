@@ -4,7 +4,6 @@ import java.util.Collection;
 
 import com.istic.sir.models.Dates;
 import com.istic.sir.models.Lieu;
-import com.istic.sir.models.Pad;
 import com.istic.sir.models.Participant;
 import com.istic.sir.models.Preference;
 import com.istic.sir.models.Sondage;

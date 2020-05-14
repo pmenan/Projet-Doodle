@@ -18,17 +18,24 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.istic.sir.models.SondageDate;
+import com.istic.sir.models.SondageLieu;
+
 @Entity
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({@JsonSubTypes.Type(value = SondageLieu.class, name = "lieu"),
+@JsonSubTypes.Type(value = SondageDate.class, name = "date")})
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Sondage {
 	
-	private long id_sondage;
+	private Long id_sondage;
 	private String libelle_sondage;
 	private String description_sondage;
-	private boolean pause;
 	private boolean valide;
-	private Pad pad;
-	private Collection<Preference> preferences;
+	private String code;
+	private Collection<Preference> preferences = new ArrayList<>();
 	private List<Participant> participant = new ArrayList<Participant>();
 	private Participant createurSondage;
 	
@@ -40,16 +47,15 @@ public class Sondage {
 	public Sondage(String libelle, String description) {
 		this.libelle_sondage = libelle;
 		this.description_sondage = description;
-		this.pause = false;
 	}
 
 	@Id
 	@GeneratedValue
-	public long getId_sondage() {
+	public Long getId_sondage() {
 		return id_sondage;
 	}
 
-	public void setId_sondage(long id_sondage) {
+	public void setId_sondage(Long id_sondage) {
 		this.id_sondage = id_sondage;
 	}
 
@@ -68,24 +74,6 @@ public class Sondage {
 	public void setDescription_sondage(String description_sondage) {
 		this.description_sondage = description_sondage;
 	}
-
-	public boolean isPause() {
-		return pause;
-	}
-
-	public void setPause(boolean pause) {
-		this.pause = pause;
-	}
-	
-	@OneToOne
-	public Pad getPad() {
-		return pad;
-	}
-
-	public void setPad(Pad pad) {
-		this.pad = pad;
-	}
-	
 
 	public boolean isValide() {
 		return valide;
@@ -109,6 +97,7 @@ public class Sondage {
 	}
 	
 	@ManyToOne
+	@JoinColumn(nullable = false)
 	public Participant getCreateurSondage() {
 		return createurSondage;
 	}
@@ -125,8 +114,15 @@ public class Sondage {
 	public void setPreferences(Collection<Preference> preferences) {
 		this.preferences = preferences;
 	}
-	
-	
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+		
 		
 
 }

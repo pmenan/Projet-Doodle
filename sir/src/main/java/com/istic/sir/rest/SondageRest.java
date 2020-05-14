@@ -20,7 +20,7 @@ public class SondageRest {
 	@Autowired
 	private SondageService sondage_service;
 	
-	@GetMapping(value = " ")
+	@GetMapping(value = "")
 	public Collection<Sondage> get_all_sondage(@PathVariable(value= "id_user") Long id_user){
 		return sondage_service.getSondage();
 	}
