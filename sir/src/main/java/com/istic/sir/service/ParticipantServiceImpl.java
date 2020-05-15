@@ -50,6 +50,8 @@ public class ParticipantServiceImpl implements ParticipantService {
 	ParticipantRepo participantRepo;
 	
 	
+	
+	
 	@Override
 	public Participant login(Participant participant) {
 		
@@ -78,6 +80,29 @@ public class ParticipantServiceImpl implements ParticipantService {
 	}
 
 	@Override
+	@Transactional
+	public Lieu createLieu(Lieu lieu) {
+		
+		return lieuRepo.save(lieu);
+	}
+	
+	@Override
+	@Transactional
+	public Dates createDate(Dates date) {
+		
+		return datesRepo.save(date);
+	}
+	
+	
+	@Override
+	@Transactional
+	public Preference createPreference(Preference preference) {
+		
+		return preferenceRepo.save(preference);
+	}
+	
+	
+	@Override
 	public Collection<Sondage> getUserSondages(Long id_user) {
 		
 		Participant user =  participantRepo.findById(id_user).get();
@@ -96,9 +121,10 @@ public class ParticipantServiceImpl implements ParticipantService {
 
 	@Transactional
 	@Override
-	public Lieu addLieuSondage(Long id_user, Long id_sondage, Lieu lieu) {
+	public Lieu addLieuSondage(Long id_user, Long id_sondage, Long id_lieu) {
+		Lieu lieu = new Lieu();
 		SondageLieu sondage = (SondageLieu) getSondageById(id_sondage);
-		lieu = lieuRepo.save(lieu);
+		lieu = lieuRepo.getOne(id_lieu);
 		sondage.getListeLieu().add(lieu);
 		
 		return lieu;
@@ -106,9 +132,10 @@ public class ParticipantServiceImpl implements ParticipantService {
 	
 	@Transactional
 	@Override
-	public Dates addDateSondage(Long id_user, Long id_sondage, Dates date) {
+	public Dates addDateSondage(Long id_user, Long id_sondage, Long id_date) {
+		Dates date = new Dates();
 		SondageDate sondage = (SondageDate) getSondageById(id_sondage);
-		date = datesRepo.save(date);
+		date = datesRepo.getOne(id_date);
 		sondage.getListeDate().add(date);
 		
 		return date;
@@ -186,12 +213,12 @@ public class ParticipantServiceImpl implements ParticipantService {
 	
 	@Transactional
 	@Override
-	public Preference addPreSondage(Long id_user, Long id_sondage, Preference preference) {
+	public Preference addPreSondage(Long id_user, Long id_sondage, Long id_preference) {
+		Preference preference = new Preference();
 		Sondage sondage = getSondageById(id_sondage);
+		preference = preferenceRepo.getOne(id_preference);
 		sondage.getPreferences().add(preference);
-		preference = preferenceRepo.save(preference);
-		
-		return preference;
+		return preference;	
 	}
 
 	@Transactional

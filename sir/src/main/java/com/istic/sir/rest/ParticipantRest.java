@@ -54,21 +54,21 @@ public class ParticipantRest {
 		return user_service.createSondage(id_user, sondage);
 	}
 	
-	@GetMapping(value = "{id_user}/sondages/{id_sondage}")
-	public Sondage getAllInfoSondage(@PathVariable(value = "id_user") Long id_sondage, @RequestBody Participant user) {
+	@GetMapping(value = "sondages/{id_sondage}")
+	public Sondage getAllInfoSondage(@PathVariable(value = "id_sondage") Long id_sondage) {
 		return user_service.getSondageById(id_sondage);
 	}
 	
 	 //urls
 	
-	@PostMapping(value = "/{id_user}/sondages/{id_sondage/validate")
+	@PostMapping(value = "/{id_user}/sondages/{id_sondage}/validate")
 	 public Sondage valider_sondage(@PathVariable(value = "id_user") Long id_user, @PathVariable(value = "id_sondage") Long id_sondage) {
 		 return user_service.valider_sondage(id_user, id_sondage);
 	 }
 	 
-	@PostMapping(value = "/{id_user}/sondages/{id_sondage}/dates")
-	    public Dates addDateSondage(@PathVariable(value = "id_ser") Long id_user, @PathVariable(value = "id_sondage") Long id_sondage, @RequestBody Dates date) {
-	        return user_service.addDateSondage(id_user, id_sondage, date);
+	@PostMapping(value = "/{id_user}/sondages/{id_sondage}/dates/{id_date}")
+	    public Dates addDateSondage(@PathVariable(value = "id_user") Long id_user, @PathVariable(value = "id_sondage") Long id_sondage,  @PathVariable(value = "id_date") Long id_date) {
+	        return user_service.addDateSondage(id_user, id_sondage, id_date);
 	    }
 
 	@PutMapping(value = "/{id_user}/sondages/{id_sondage}/dates/{id_date}")
@@ -81,9 +81,9 @@ public class ParticipantRest {
 	         user_service.deleteDate(id_user, id_sondage, id_date);
 	    }
 	
-	@PostMapping(value = "/{id_user}/sondages/{id_sondage}/lieux")
-    public Lieu addLieuSondages(@PathVariable(value = "id_user") Long id_user, @PathVariable(value = "id_sondage") Long id_sondage, @RequestBody Lieu lieu) {
-        return user_service.addLieuSondage(id_user, id_sondage, lieu);
+	@PostMapping(value = "/{id_user}/sondages/{id_sondage}/lieux/{id_lieu}")
+    public Lieu addLieuSondages(@PathVariable(value = "id_user") Long id_user, @PathVariable(value = "id_sondage") Long id_sondage, @PathVariable(value = "id_lieu") Long id_lieu) {
+        return user_service.addLieuSondage(id_user, id_sondage, id_lieu);
     }
 
 
@@ -98,10 +98,24 @@ public class ParticipantRest {
     }
     
     
-    @PostMapping(value = "/{id_user}/sondages/{id_sondage}/preferences")
-    public Preference addPreferenceSondage(@PathVariable(value = "id_user") Long id_user, @PathVariable(value = "id_sondage") Long id_sondage, @RequestBody Preference preference) {
-        return user_service.addPreSondage(id_user, id_sondage, preference);
+    @PostMapping(value = "/{id_user}/sondages/{id_sondage}/preferences/{id_preference}")
+    public Preference addPreferenceSondage(@PathVariable(value = "id_user") Long id_user, @PathVariable(value = "id_sondage") Long id_sondage, @PathVariable(value = "id_preference") Long id_preference) {
+        return user_service.addPreSondage(id_user, id_sondage, id_preference);
     }
 	 
 
+    @PostMapping(value = "/createLieu")
+	public Lieu createLieu(@RequestBody Lieu lieu) {
+		return user_service.createLieu(lieu);
+	}
+    
+    @PostMapping(value = "/createDate")
+	public Dates createDate(@RequestBody Dates date) {
+		return user_service.createDate(date);
+	}
+    
+    @PostMapping(value = "/createPreference")
+	public Preference createPreference(@RequestBody Preference preference) {
+		return user_service.createPreference(preference);
+	}
 }

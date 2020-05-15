@@ -20,9 +20,9 @@ public interface ParticipantService {
 	
 	Sondage getSondageById(Long id_sondage);
 	
-	Lieu addLieuSondage(Long id_user, Long id_sondage, Lieu lieu);
+	Lieu addLieuSondage(Long id_user, Long id_sondage, Long id_lieu);
 	
-	Dates addDateSondage(Long id_user, Long id_sondage, Dates date);
+	Dates addDateSondage(Long id_user, Long id_sondage, Long id_date);
 	
 	Sondage valider_sondage(Long id_user, Long id_sondage);
 	
@@ -36,7 +36,13 @@ public interface ParticipantService {
 	
 	void deleteLieu(Long id_user, Long id_sondage, Long id_lieu);
 	
-	Preference addPreSondage(Long id_user, Long id_sondage, Preference preference);
+	Preference addPreSondage(Long id_user, Long id_sondage, Long id_preference);
+
+	Lieu createLieu(Lieu lieu);
+
+	Dates createDate(Dates date);
+
+	Preference createPreference(Preference preference);
 	
 	
 	
