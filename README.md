@@ -67,6 +67,12 @@ http://localhost:8080/users/createPreference
 /*Afficher tous les sondages (Methode GET)*/<br>
 http://localhost:8080/sondages
 
+
+**AUTRES**</br>
+* [ ] Lien Front-end projet doodle : 
+* [ ] Lien projet POKEMON : https://github.com/Yannick-Emmanuel/pokdemo
+
+
 **AUTEURS**<br>
 Patrick MENAN<br>
 Yannick ECTHE
